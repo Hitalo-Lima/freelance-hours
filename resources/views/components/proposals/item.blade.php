@@ -1,32 +1,23 @@
-<x-ui.card>
-    <div class="flex items-center justify-between pb-4">
-        <div class="flex flex-col ">
-            <h2 class="text-[20px] text-white leading-9">
-                Propostas
-            </h2>
+@props([
+    'proposal',
+    'position'
+])
+<div class="flex justify-between items-center">
+    <div class="flex items-center space-x-2">
+        <div>
+            <x-proposals.position :$position/>
+        </div>
+        <div>
+            <div class="text-white text-[14px] font-bold tracking-wide truncate w-[150px]">
+                {{ $proposal->email }}
+            </div>
             <div class="text-[#8C8C9A] text-[12px]">
-                Publicado há 4 horas
+                Enviado {{ $proposal->created_at->diffForHumans() }}
             </div>
         </div>
-        <div class="flex items-center space-x-2">
-            <x-ui.icons.people-group class="w-[18px] h-[18px]"/>
-            <span>{{ sizeOf($proposals) }}</span>
-        </div>
     </div>
-
-    <div class="py-4">
-        <div class="flex flex-col gap-7">
-            @foreach(array_slice($proposals,0,10) as $proposal)
-                <x-proposals.item :$proposal :position="$loop->index"/>
-            @endforeach
-        </div>
-
-        <div class="mt-6">
-            <button class="bg-[#181826] text-white font-bold tracking-wide uppercase px-8 py-3 rounded-[4px]
-                    hover:bg-[#373751] transition duration-300 ease-in-out w-full">
-                Carregar Mais
-            </button>
-        </div>
+    <div class="whitespace-nowrap uppercase font-bold text-[#C3C3D1] flex items-center space-x-2 px-[8px] py-[4px] rounded-full bg-[#181826] border border-[#1E1E2C] text-[12px]">
+        <x-ui.icons.clock class="w-[18px] h-[18px]"/>
+        <span>{{ str_pad($proposal->time, 2, "0", STR_PAD_LEFT) }} horas</span>
     </div>
-
-</x-ui.card>
+</div>
